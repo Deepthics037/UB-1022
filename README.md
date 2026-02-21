@@ -23,9 +23,7 @@ Installation
 
 Usage
 
-Contributing
 
-License
 
 Problem Statement
 
@@ -171,7 +169,11 @@ For Government Schemes, browse the cards and click the "Visit Official Website" 
 
 
 TEAM MEMBERS :
+
 Deepthi Y V
+
 Ashitha C U
+
 Bhoomika A
+
 Isiri 
