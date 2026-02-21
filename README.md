@@ -1,7 +1,5 @@
 🌾 AI-Powered Smart Farmer Assistance System
-https://img.shields.io/badge/Flask-2.3.3-green?style=flat
-https://img.shields.io/badge/Python-3.11-blue
-https://img.shields.io/badge/license-MIT-orange
+
 
 A comprehensive web‑based platform that empowers farmers with AI‑driven insights and essential agricultural information. The system provides crop recommendations, disease detection, weather forecasts, price predictions, and government scheme information in a user‑friendly, responsive interface.
 
