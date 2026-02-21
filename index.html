@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 Smart Farmer AI – Hackathon</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== Your existing CSS (unchanged) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6fbf9;
+            color: #1e2f23;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        /* navigation */
+        nav {
+            background: #ffffffd9;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 40, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 2px solid #c0e3d0;
+        }
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1c4b3c;
+            letter-spacing: -0.5px;
+        }
+        .logo i {
+            color: #2e8b57;
+            margin-right: 8px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #1f3b2c;
+            padding: 0.5rem 0.2rem;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            border-bottom-color: #2e8b57;
+            color: #0f2e1f;
+        }
+        /* hero */
+        .hero {
+            background: linear-gradient(145deg, #d9f0e3 0%, #b8e0cc 100%);
+            border-radius: 0 0 3rem 3rem;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1c4b3c;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            color: #2b5a41;
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+        /* cards grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 15px 30px -10px rgba(30, 60, 40, 0.2);
+            transition: all 0.2s ease;
+            border: 1px solid #d3edd9;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 35px -10px #1e4b3a55;
+        }
+        .card i {
+            font-size: 3rem;
+            color: #2e8b57;
+            margin-bottom: 1rem;
+        }
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #173e2d;
+        }
+        .button {
+            background: #2e8b57;
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 8px 14px -8px #1b4d33;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .button-outline {
+            background: transparent;
+            border: 2px solid #2e8b57;
+            color: #2e8b57;
+            box-shadow: none;
+        }
+        .button:hover {
+            background: #1f6740;
+            transform: scale(1.02);
+        }
+        .button-outline:hover {
+            background: #e2f3e6;
+        }
+        /* section style */
+        .section {
+            background: white;
+            border-radius: 2.5rem;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 6px 24px #d5ecddaa;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            color: #1c4b3c;
+            border-left: 12px solid #44b77b;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        /* form elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            font-weight: 600;
+            color: #1f402e;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid #d1e6da;
+            border-radius: 40px;
+            font-size: 1rem;
+            background: #fefefe;
+            transition: 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #46b67c;
+            box-shadow: 0 0 0 4px #dcf5e7;
+        }
+        .chat-box {
+            background: #f0f9f2;
+            border-radius: 30px;
+            padding: 1.5rem;
+            height: 350px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border: 2px solid #b7e0c4;
+            margin-bottom: 1rem;
+        }
+        .message {
+            max-width: 80%;
+            padding: 0.8rem 1.4rem;
+            border-radius: 28px;
+            font-weight: 500;
+            word-break: break-word;
+        }
+        .user-message {
+            background: #2e8b57;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+        }
+        .bot-message {
+            background: white;
+            border: 2px solid #b7e0c4;
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
+        }
+        .chat-input-row {
+            display: flex;
+            gap: 0.8rem;
+        }
+        .chat-input-row input {
+            border-radius: 60px;
+        }
+        /* image preview */
+        .image-preview {
+            width: 180px;
+            height: 180px;
+            border-radius: 24px;
+            border: 3px dashed #7fcfa3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f3fcf5;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        .result-badge {
+            background: #e2f0e6;
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 12px solid #3e9f67;
+        }
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 4px solid #d5f0de;
+            border-top-color: #2e8b57;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #366e4c;
+            border-top: 2px solid #c0e3d0;
+            margin-top: 4rem;
+        }
+        .error-message {
+            background: #ffe1de;
+            color: #a43a2e;
+            padding: 1rem;
+            border-radius: 60px;
+            margin: 1rem 0;
+        }
+        /* responsive */
+        @media (max-width: 700px) {
+            .nav-wrap { flex-direction: column; gap: 0.8rem; }
+            .hero h1 { font-size: 2.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container nav-wrap">
+            <div class="logo"><i class="fas fa-seedling"></i> Smart Farmer AI</div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" data-section="home">Home</a>
+                <a href="#" class="nav-link" data-section="crop">Crop Prediction</a>
+                <a href="#" class="nav-link" data-section="disease">Disease Detection</a>
+                <a href="#" class="nav-link" data-section="weather">Weather</a>
+                <a href="#" class="nav-link" data-section="price">Price Prediction</a>
+                <a href="#" class="nav-link" data-section="schemes">Schemes</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" id="main-content">
+        <!-- dynamic content will be injected by JS -->
+    </main>
+
+    <footer class="footer">
+        <p>🌱 AI-Powered Smart Farmer Assistance — Hackathon prototype · green module demo</p>
+    </footer>
+
+    <script>
+        // ---------- CLIENT SIDE ROUTING & API CALLS ----------
+        const mainEl = document.getElementById('main-content');
+        let activeSection = 'home';
+
+        // ========== RENDER FUNCTIONS ==========
+        function renderHome() {
+            return `
+                <div class="hero">
+                    <h1>🌾 AI-Powered Smart Farmer Assistance System</h1>
+                    <p>Empowering farmers with AI — crop prediction, disease detection, weather, price prediction & government schemes.</p>
+                    <a href="#" class="button" data-nav="crop">Get Started <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="card-grid">
+                    <div class="card"> <i class="fas fa-tractor"></i> <h3>Crop Prediction</h3> <p>Best crop based on soil & climate</p> <a href="#" class="button button-outline" data-nav="crop">Predict</a> </div>
+                    <div class="card"> <i class="fas fa-leaf"></i> <h3>Disease Detection</h3> <p>Upload leaf photo, get cure</p> <a href="#" class="button button-outline" data-nav="disease">Detect</a> </div>
+                    <div class="card"> <i class="fas fa-cloud-sun-rain"></i> <h3>Weather</h3> <p>Live forecast for your farm</p> <a href="#" class="button button-outline" data-nav="weather">Check</a> </div>
+                    <div class="card"> <i class="fas fa-rupee-sign"></i> <h3>Price Prediction</h3> <p>Forecast crop prices</p> <a href="#" class="button button-outline" data-nav="price">Predict</a> </div>
+                    <div class="card"> <i class="fas fa-file-invoice"></i> <h3>Govt Schemes</h3> <p>Check your eligibility and apply</p> <a href="#" class="button button-outline" data-nav="schemes">Explore</a> </div>
+                </div>
+            `;
+        }
+
+        function renderCrop() {
+            return `
+                <div class="section">
+                    <h2 class="section-title">🌱 Crop Prediction</h2>
+                    <form id="cropForm">
+                        <div class="form-group"><label>Soil type</label><select id="soil" required><option>Clay</option><option>Loamy</option><option>Sandy</option><option>Black</option><option>Red</option></select></div>
+                        <div class="form-group"><label>Temperature (°C)</label><input type="number" id="temp" value="26" required></div>
+                        <div class="form-group"><label>Rainfall (mm)</label><input type="number" id="rain" value="120" required></div>
+                        <div class="form-group"><label>Humidity (%)</label><input type="number" id="humidity" value="70" required></div>
+                        <button class="button" type="submit" id="predictCropBtn">Predict Crop</button>
+                    </form>
+                    <div id="cropResult" class="result-badge" style="display:none;"></div>
+                    <div id="cropLoading" style="display:none;" class="loading"></div>
+                </div>
+            `;
+        }
+
+        function renderDisease() {
+            return `
+                <div class="section">
+                    <h2 class="section-title">🦠 Disease Detection</h2>
+                    <div class="form-group"><label>Upload leaf image</label><input type="file" id="leafImage" accept="image/*"></div>
+                    <div class="image-preview" id="imagePreview"><i class="fas fa-image" style="font-size:3rem; color:#9ac7af;"></i></div>
+                    <button class="button" id="detectDiseaseBtn">Analyze Disease</button>
+                    <div id="diseaseResult" class="result-badge" style="display:none;"></div>
+                    <div id="diseaseLoading" style="display:none;" class="loading"></div>
+                </div>
+            `;
+        }
+
+        function renderWeather() {
+            return `
+                <div class="section">
+                    <h2 class="section-title">⛅ Weather Forecast</h2>
+                    <div class="form-group">
+                        <label>City name (add ,IN for Indian cities)</label>
+                        <input type="text" id="cityInput" placeholder="e.g. Bangalore,IN or Mumbai" value="Delhi,IN">
+                    </div>
+                    <button class="button" id="getWeatherBtn">Get Weather</button>
+                    <div id="weatherResult" class="result-badge" style="display:none;"></div>
+                    <div id="weatherLoading" style="display:none;" class="loading"></div>
+                </div>
+            `;
+        }
+
+        function renderPrice() {
+            return `
+                <div class="section">
+                    <h2 class="section-title">💰 Crop Price Prediction</h2>
+                    <div class="form-group">
+                        <label>Select Crop</label>
+                        <select id="cropSelect" class="form-control">
+                            <option value="rice">Rice</option>
+                            <option value="wheat">Wheat</option>
+                            <option value="tomato">Tomato</option>
+                            <option value="potato">Potato</option>
+                            <option value="onion">Onion</option>
+                            <option value="maize">Maize</option>
+                            <!-- New crops -->
+                            <option value="arecanut">Arecanut</option>
+                            <option value="cocoa">Cocoa</option>
+                            <option value="pepper">Black Pepper</option>
+                            <option value="banana">Banana</option>
+                            <option value="coconut">Coconut</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prediction Month (1-12)</label>
+                        <input type="number" id="monthInput" min="1" max="12" value="1" class="form-control">
+                    </div>
+                    <button class="button" id="predictPriceBtn">Predict Price</button>
+                    <div id="priceResult" class="result-badge" style="display:none;"></div>
+                    <div id="priceLoading" style="display:none;" class="loading"></div>
+                </div>
+            `;
+        }
+
+        // ===== Government Schemes Section =====
+        function renderSchemes() {
+            // Government schemes data with official links
+            const schemes = [
+                {
+                    name: "PM-KISAN Samman Nidhi",
+                    description: "Income support of ₹6,000 per year in three equal instalments to land-holding farmers.",
+                    official_website: "https://pmkisan.gov.in",
+                    benefits: "Direct cash transfer, no middlemen",
+                    category: "Income Support",
+                    helpline: "011-24300606",
+                    launch_year: "2019"
+                },
+                {
+                    name: "PM Fasal Bima Yojana (PMFBY)",
+                    description: "Comprehensive crop insurance covering yield losses, post-harvest losses, and localized calamities.",
+                    official_website: "https://pmfby.gov.in",
+                    benefits: "Affordable premiums: 2% for Kharif, 1.5% for Rabi, 5% for commercial crops",
+                    category: "Insurance",
+                    helpline: "1800-180-1551",
+                    launch_year: "2016"
+                },
+                {
+                    name: "Kisan Credit Card (KCC)",
+                    description: "Provides farmers with timely access to credit for agricultural and allied activities.",
+                    official_website: "https://www.myscheme.gov.in/schemes/kcc",
+                    benefits: "Affordable interest rates, coverage for post-harvest needs, flexible repayment",
+                    category: "Credit",
+                    helpline: "1800-180-1551",
+                    launch_year: "1998"
+                },
+                {
+                    name: "Soil Health Card Scheme",
+                    description: "Provides farmers with soil nutrient status and recommendations for appropriate fertilizer usage.",
+                    official_website: "https://soilhealth.dac.gov.in",
+                    benefits: "Improves soil health, reduces fertilizer costs, increases yield",
+                    category: "Advisory",
+                    launch_year: "2015"
+                },
+                {
+                    name: "PM Krishi Sinchayee Yojana",
+                    description: "Improves water use efficiency through micro-irrigation and source creation.",
+                    official_website: "https://pmksy.gov.in",
+                    benefits: "Per Drop More Crop, increased irrigation coverage",
+                    category: "Irrigation",
+                    launch_year: "2015"
+                },
+                {
+                    name: "Rythu Bharosa (Telangana)",
+                    description: "Investment support of ₹12,000 per acre per year to farmers in Telangana.",
+                    official_website: "https://rythubharosa.telangana.gov.in",
+                    benefits: "Direct benefit transfer, no acreage limit",
+                    category: "State Scheme",
+                    applicable_states: "Telangana",
+                    launch_year: "2018"
+                },
+                {
+                    name: "Bharat-VISTAAR",
+                    description: "AI-powered multilingual tool providing customized agricultural advisory in farmers' own language.",
+                    official_website: "https://bharatvistaar.gov.in",
+                    benefits: "24x7 digital expert, weather alerts, pest warnings, scheme information",
+                    category: "Digital Service",
+                    helpline: "155261",
+                    launch_year: "2026",
+                    is_new: true
+                },
+                {
+                    name: "Coconut Promotion Scheme",
+                    description: "Enhances coconut productivity through replacement of old trees with high-yielding varieties.",
+                    official_website: "https://coconutboard.gov.in",
+                    benefits: "Higher yields, better quality, increased farmer income",
+                    category: "Crop Development",
+                    applicable_crops: "Coconut",
+                    launch_year: "2026",
+                    is_new: true
+                },
+                {
+                    name: "PM Dhan Dhaanya Krishi Yojana",
+                    description: "Enhances agricultural productivity in 100 districts through convergence of 36 existing schemes.",
+                    official_website: "https://pmddky.gov.in",
+                    benefits: "Improved irrigation, post-harvest storage, access to credit",
+                    category: "Integrated Development",
+                    launch_year: "2025",
+                    is_new: true
+                }
+            ];
+
+            // Group schemes by category
+            const categories = {};
+            schemes.forEach(scheme => {
+                if (!categories[scheme.category]) {
+                    categories[scheme.category] = [];
+                }
+                categories[scheme.category].push(scheme);
+            });
+
+            // Build HTML
+            let schemesHtml = `
+                <div class="section">
+                    <h2 class="section-title">📋 Government Schemes for Farmers</h2>
+                    <p style="margin-bottom: 20px; color: #2b5a41;">Click on any scheme to visit the official website for application and more details.</p>
+            `;
+
+            // Add new schemes badge for 2025-26 budget announcements
+            schemesHtml += `
+                <div style="background-color: #fff9e6; border-left: 6px solid #ffc107; padding: 15px; margin-bottom: 25px; border-radius: 10px;">
+                    <strong style="color: #b85e00;">🆕 New in Union Budget 2026-27:</strong> 
+                    <span style="color: #1e2f23;">Bharat-VISTAAR (AI tool), Coconut Promotion Scheme, and PM Dhan Dhaanya Krishi Yojana are now available.</span>
+                </div>
+            `;
+
+            // Display schemes by category
+            for (const [category, categorySchemes] of Object.entries(categories)) {
+                schemesHtml += `
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #1c4b3c; border-bottom: 2px solid #c0e3d0; padding-bottom: 8px; margin-bottom: 15px;">${category}</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                `;
+
+                categorySchemes.forEach(scheme => {
+                    const newBadge = scheme.is_new ? 
+                        '<span style="background-color: #ff5722; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; margin-left: 10px;">NEW 2026</span>' : 
+                        '';
+
+                    const applicableInfo = [];
+                    if (scheme.applicable_crops) applicableInfo.push(`Crops: ${scheme.applicable_crops}`);
+                    if (scheme.applicable_states) applicableInfo.push(`States: ${scheme.applicable_states}`);
+                    const applicableText = applicableInfo.length > 0 ? 
+                        `<p style="font-size: 0.85rem; color: #666; margin-top: 5px;"><strong>Applicable:</strong> ${applicableInfo.join(' • ')}</p>` : 
+                        '';
+
+                    schemesHtml += `
+                        <div style="background: white; border-radius: 15px; padding: 18px; box-shadow: 0 5px 15px rgba(0,40,0,0.08); border: 1px solid #e0f0e5; transition: transform 0.2s;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h4 style="font-size: 1.2rem; color: #173e2d; margin: 0;">${scheme.name} ${newBadge}</h4>
+                            </div>
+                            <p style="color: #366e4c; font-size: 0.95rem; margin-bottom: 12px;">${scheme.description}</p>
+                            <div style="background-color: #f0f9f2; padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                                <p style="margin: 0; font-size: 0.9rem;"><strong>✓ Benefits:</strong> ${scheme.benefits}</p>
+                                ${applicableText}
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #666;">
+                                <span>Launched: ${scheme.launch_year}</span>
+                                ${scheme.helpline ? `<span>📞 Helpline: ${scheme.helpline}</span>` : ''}
+                            </div>
+                            <div style="margin-top: 15px;">
+                                <a href="${scheme.official_website}" target="_blank" style="background-color: #2e8b57; color: white; padding: 8px 16px; border-radius: 30px; text-decoration: none; display: inline-block; font-size: 0.9rem; font-weight: 500;">Visit Official Website →</a>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                schemesHtml += `
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Add a how-to-apply section for PM-KISAN
+            schemesHtml += `
+                <div style="margin-top: 30px; background-color: #e8f5e9; border-radius: 15px; padding: 20px;">
+                    <h3 style="color: #1c4b3c; margin-bottom: 15px;">📌 How to Apply for PM-KISAN</h3>
+                    <ol style="padding-left: 20px; color: #1e2f23;">
+                        <li style="margin-bottom: 8px;">Visit <a href="https://pmkisan.gov.in" target="_blank" style="color: #2e8b57;">pmkisan.gov.in</a></li>
+                        <li style="margin-bottom: 8px;">Click on "New Farmer Registration" under Farmer Corner</li>
+                        <li style="margin-bottom: 8px;">Enter your Aadhaar number, bank details, and land records</li>
+                        <li style="margin-bottom: 8px;">Complete e-KYC through OTP verification</li>
+                        <li style="margin-bottom: 8px;">Save your application number for future reference</li>
+                    </ol>
+                    <p style="margin-top: 15px; font-style: italic; color: #2b5a41;">For assistance, visit your nearest Common Service Centre (CSC).</p>
+                </div>
+            `;
+
+            schemesHtml += `</div>`;
+            return schemesHtml;
+        }
+
+        // ========== NAVIGATION ==========
+        function setActiveLink(section) {
+            document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+            document.querySelector(`.nav-link[data-section="${section}"]`).classList.add('active');
+        }
+
+        function navigateTo(section) {
+            activeSection = section;
+            setActiveLink(section);
+            if (section === 'home') mainEl.innerHTML = renderHome();
+            else if (section === 'crop') mainEl.innerHTML = renderCrop();
+            else if (section === 'disease') mainEl.innerHTML = renderDisease();
+            else if (section === 'weather') mainEl.innerHTML = renderWeather();
+            else if (section === 'price') mainEl.innerHTML = renderPrice();
+            else if (section === 'schemes') mainEl.innerHTML = renderSchemes();
+
+            attachSpecificListeners();
+        }
+
+        // ========== EVENT LISTENERS ==========
+        function attachSpecificListeners() {
+            // Crop prediction
+            if (activeSection === 'crop') {
+                document.getElementById('cropForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const soil = document.getElementById('soil').value;
+                    const temp = document.getElementById('temp').value;
+                    const rain = document.getElementById('rain').value;
+                    const hum = document.getElementById('humidity').value;
+                    const resultDiv = document.getElementById('cropResult');
+                    const loading = document.getElementById('cropLoading');
+                    resultDiv.style.display = 'none';
+                    loading.style.display = 'inline-block';
+                    
+                    try {
+                        const response = await fetch('/crop-prediction', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ soil, temperature: temp, rainfall: rain, humidity: hum })
+                        });
+                        const data = await response.json();
+                        loading.style.display = 'none';
+                        
+                        let cropsHtml = '<strong>🌽 Suitable Crops (best match first):</strong><ul style="margin-top:10px; list-style-type:disc; padding-left:20px;">';
+                        data.crops.forEach(crop => {
+                            cropsHtml += `<li>${crop}</li>`;
+                        });
+                        cropsHtml += '</ul>';
+                        if (data.note) {
+                            cropsHtml += `<p><em>${data.note}</em></p>`;
+                        }
+                        
+                        resultDiv.innerHTML = cropsHtml;
+                        resultDiv.style.display = 'block';
+                    } catch (error) {
+                        loading.style.display = 'none';
+                        resultDiv.innerHTML = `<div class="error-message">❌ Error: ${error.message}</div>`;
+                        resultDiv.style.display = 'block';
+                    }
+                });
+            }
+            
+            // Disease detection
+            if (activeSection === 'disease') {
+                document.getElementById('leafImage').addEventListener('change', function(e) {
+                    const preview = document.getElementById('imagePreview');
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(ev) { 
+                            preview.innerHTML = `<img src="${ev.target.result}" alt="preview">`; 
+                        }
+                        reader.readAsDataURL(file);
+                    } else { 
+                        preview.innerHTML = '<i class="fas fa-image" style="font-size:3rem;"></i>'; 
+                    }
+                });
+                
+                document.getElementById('detectDiseaseBtn').addEventListener('click', function() {
+                    const fileInput = document.getElementById('leafImage');
+                    const file = fileInput.files[0];
+                    if (!file) {
+                        alert('Please select an image first');
+                        return;
+                    }
+                    
+                    const loading = document.getElementById('diseaseLoading');
+                    const resultDiv = document.getElementById('diseaseResult');
+                    loading.style.display = 'inline-block';
+                    resultDiv.style.display = 'none';
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const base64Image = e.target.result;
+                        
+                        fetch('/disease-detection', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ image: base64Image })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            loading.style.display = 'none';
+                            if (data.error) {
+                                resultDiv.innerHTML = `<div class="error-message">❌ ${data.error}</div>`;
+                            } else {
+                                resultDiv.innerHTML = `
+                                    <strong>🦠 ${data.name}</strong><br>
+                                    📊 <strong>Confidence:</strong> ${data.confidence}<br>
+                                    💊 <strong>Solution:</strong> ${data.solution}<br>
+                                    🛡️ <strong>Prevention:</strong> ${data.prevention}
+                                `;
+                            }
+                            resultDiv.style.display = 'block';
+                        })
+                        .catch(error => {
+                            loading.style.display = 'none';
+                            resultDiv.innerHTML = `<div class="error-message">❌ Error: ${error.message}</div>`;
+                            resultDiv.style.display = 'block';
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            // Weather
+            if (activeSection === 'weather') {
+                document.getElementById('getWeatherBtn').addEventListener('click', function() {
+                    const city = document.getElementById('cityInput').value.trim();
+                    if (!city) {
+                        alert('Please enter a city name');
+                        return;
+                    }
+                    const loading = document.getElementById('weatherLoading');
+                    const resultDiv = document.getElementById('weatherResult');
+                    
+                    loading.style.display = 'inline-block';
+                    resultDiv.style.display = 'none';
+                    resultDiv.innerHTML = '';
+                    
+                    fetch('/weather', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ city: city })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        loading.style.display = 'none';
+                        
+                        if (data.error) {
+                            resultDiv.innerHTML = `<div class="error-message">❌ ${data.error}</div>`;
+                        } else {
+                            resultDiv.innerHTML = `
+                                <div style="text-align: left;">
+                                    <h3>📍 ${data.city}, ${data.country || ''}</h3>
+                                    <p><strong>🌡️ Temperature:</strong> ${data.temperature}°C</p>
+                                    <p><strong>☁️ Condition:</strong> ${data.condition}</p>
+                                    <p><strong>💧 Humidity:</strong> ${data.humidity}%</p>
+                                    <p><strong>🌧️ Rainfall:</strong> ${data.rain_mm !== undefined ? data.rain_mm + ' mm' : data.rain_prediction}</p>
+                                </div>
+                            `;
+                        }
+                        resultDiv.style.display = 'block';
+                    })
+                    .catch(error => {
+                        loading.style.display = 'none';
+                        resultDiv.innerHTML = `<div class="error-message">❌ Network error: ${error.message}</div>`;
+                        resultDiv.style.display = 'block';
+                    });
+                });
+            }
+            
+            // Price prediction
+            if (activeSection === 'price') {
+                document.getElementById('predictPriceBtn').addEventListener('click', function() {
+                    const crop = document.getElementById('cropSelect').value;
+                    const month = document.getElementById('monthInput').value;
+                    const loading = document.getElementById('priceLoading');
+                    const resultDiv = document.getElementById('priceResult');
+                    
+                    loading.style.display = 'inline-block';
+                    resultDiv.style.display = 'none';
+                    
+                    fetch('/price-prediction', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ crop: crop, month: month })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        loading.style.display = 'none';
+                        
+                        if (data.error) {
+                            resultDiv.innerHTML = `<div class="error-message">❌ ${data.error}</div>`;
+                        } else {
+                            let trendColor = '#2e8b57'; // green
+                            if (data.trend === 'highly volatile') trendColor = '#e67e22'; // orange
+                            if (data.trend === 'slightly up') trendColor = '#27ae60'; // green
+                            
+                            resultDiv.innerHTML = `
+                                <div style="text-align: left;">
+                                    <h3>📈 ${data.crop.charAt(0).toUpperCase() + data.crop.slice(1)} Price Forecast</h3>
+                                    <p><strong>💰 Predicted Price:</strong> ₹${data.predicted_price} ${data.unit}</p>
+                                    <p><strong>📊 Confidence:</strong> ${data.confidence}</p>
+                                    <p><strong>📉 Market Trend:</strong> <span style="color: ${trendColor}; font-weight: bold;">${data.trend}</span></p>
+                                    <p><strong>💡 Advice:</strong> ${data.advice}</p>
+                                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">Source: ${data.source}</p>
+                                </div>
+                            `;
+                        }
+                        resultDiv.style.display = 'block';
+                    })
+                    .catch(error => {
+                        loading.style.display = 'none';
+                        resultDiv.innerHTML = `<div class="error-message">❌ Error: ${error.message}</div>`;
+                        resultDiv.style.display = 'block';
+                    });
+                });
+            }
+        }
+
+        // navigation listeners
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                navigateTo(section);
+            });
+        });
+
+        // delegate home cards navigation
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[data-nav]')) {
+                e.preventDefault();
+                const targetSec = e.target.getAttribute('data-nav');
+                navigateTo(targetSec);
+            }
+        });
+
+        // initial load
+        navigateTo('home');
+    </script>
+</body>
+</html>
